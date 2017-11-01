@@ -11,7 +11,7 @@ pub struct InstanceGroupManagerOp<'a> {
 
 impl<'a> InstanceGroupManagerOp<'a> {
     /// Get Google Cloud compute instance list
-    pub fn resize(&self, new_size: u8) -> Result<GoogleAPIResponse, Box<Error>> {
+    pub fn resize(&self, new_size: u64) -> Result<GoogleAPIResponse, Box<Error>> {
         self.client.post(
             &format!("/instanceGroupManagers/{}/resize", self.name),
             vec![("size", &new_size.to_string())],
