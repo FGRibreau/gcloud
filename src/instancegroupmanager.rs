@@ -2,7 +2,7 @@ use client::{Client, GoogleAPIResponse};
 use std::error::Error;
 
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct InstanceGroupManagerOp<'a> {
     pub name: &'static str,
     pub client: &'a Client<'a>,
