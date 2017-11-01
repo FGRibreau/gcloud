@@ -3,7 +3,7 @@ use std::error::Error;
 
 
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub enum InstanceStatus {
     PROVISIONING,
     STAGING,
@@ -16,7 +16,7 @@ pub enum InstanceStatus {
 }
 
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct InstanceItem {
     pub id: String,
@@ -35,6 +35,11 @@ impl InstanceItem {
 }
 
 pub type InstanceItems = Vec<InstanceItem>;
+
+
+pub fn empty_instance_items() -> InstanceItems {
+    vec![]
+}
 
 #[derive(Debug)]
 pub struct InstanceOp<'a> {

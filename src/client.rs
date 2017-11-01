@@ -5,7 +5,7 @@ use tap::TapResultOps;
 use reqwest;
 use reqwest::Method;
 use querystring;
-use instance::InstanceItems;
+use instance::{InstanceItems, empty_instance_items};
 
 use std::error::Error;
 use querystring::QueryParams;
@@ -15,20 +15,23 @@ use std::collections::HashMap;
 const TOKEN_ENDPOINT: &str = "https://www.googleapis.com/oauth2/v4/token";
 
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct GoogleAPISuccessResponse {
     pub kind: String,
     pub id: String,
+
+    #[serde(default = "empty_instance_items")]
     pub items: InstanceItems,
 }
 
-#[derive(Deserialize, Debug)]
+
+#[derive(Deserialize, Debug, Clone)]
 pub enum GoogleAPIComputeOperationStatus {
     PROGRESS,
     DONE,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct GoogleAPISuccessComputeOperationResponse {
     pub kind: String,
@@ -44,30 +47,30 @@ pub struct GoogleAPISuccessComputeOperationResponse {
     pub end_time: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct GoogleAuthAPISuccessResponse {
     pub access_token: String,
     pub expires_in: u64,
     pub token_type: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct GoogleAuthAPIErrorResponse {
     pub error: String,
     pub error_description: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct GoogleAPIErrorResponse {
     pub error: GoogleAPIError,
 }
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct GoogleAPIError {
     pub code: u64,
     pub message: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[serde(untagged)]
 pub enum GoogleAPIResponse {
     GoogleAPISuccessComputeOperationResponse(GoogleAPISuccessComputeOperationResponse),
@@ -77,7 +80,7 @@ pub enum GoogleAPIResponse {
     GoogleAPIErrorResponse(GoogleAPIErrorResponse),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Client<'a> {
     pub client_id: &'a str,
     pub client_secret: &'a str,
