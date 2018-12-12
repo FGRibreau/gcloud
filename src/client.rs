@@ -147,9 +147,8 @@ impl<'a> Client<'a> {
     /// Run a Get HTTP query
     pub fn get(&self, path: &str, query: QueryParams) -> Result<GoogleAPIResponse, Box<Error>> {
         let client = reqwest::Client::new();
-
         Ok(client
-            .request(Method::Get, &self.url(path, query))
+            .request(Method::GET, &self.url(path, query))
             .send()
             .tap_ok(|resp| println!("Response: {:#?}", resp))?
             .json()?)
@@ -160,7 +159,7 @@ impl<'a> Client<'a> {
         let client = reqwest::Client::new();
 
         Ok(client
-            .request(Method::Post, &self.url(path, query))
+            .request(Method::POST, &self.url(path, query))
             .body("")
             .send()
             .tap_ok(|resp| println!("Response: {:#?}", resp))?
