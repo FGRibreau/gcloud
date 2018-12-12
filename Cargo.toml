@@ -1,6 +1,6 @@
 [package]
 name = "gcloud"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["François-Guillaume RIBREAU <github@fgribreau.com>"]
 repository = "https://github.com/FGRibreau/gcloud"
 readme = "README.md"
